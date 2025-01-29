@@ -1,14 +1,32 @@
-import pygame
-from pygame.locals import *
+
 import sys
 import cv2
 import numpy as np
-from OpenGL.GL import *
-from OpenGL.GLU import *
 from vision import computer_vision
-from objloder import *
+from objloder import ObjLoader
 from PIL import Image
 from PIL import ImageOps
+
+
+import pygame
+from pygame.locals import DOUBLEBUF, OPENGL
+from OpenGL.GLU import (gluPerspective)
+
+from OpenGL.GL import (glBegin, glEnd, glColor3f,
+                       glClear, glEnable, glMatrixMode,
+                       glBindTexture, glTexParameteri,
+                       glLoadIdentity, glFlush,
+                       glTexCoord2f, glTexParameterf, glReadPixels)
+
+
+from OpenGL.GL import (GL_TRIANGLES, glVertex3fv, GL_TEXTURE_WRAP_S,
+                       GL_COLOR_BUFFER_BIT, glTexImage2D,
+                       GL_DEPTH_BUFFER_BIT, GL_QUADS, GL_DEPTH_TEST,
+                       GL_MODELVIEW, GL_PROJECTION, glGenTextures,
+                       glLoadMatrixd, GL_REPEAT, GL_TEXTURE_WRAP_T,
+                       GL_TEXTURE_2D, GL_RGB, GL_TEXTURE_MIN_FILTER,
+                       GL_LINEAR, GL_TEXTURE_MAG_FILTER, GL_UNSIGNED_BYTE,
+                       GL_RGBA)
 
 
 class draw3d:
@@ -107,6 +125,7 @@ class draw3d:
 
         self.z = float(100)
         self.x = (np.tan((float(fov) / 2.0) * (np.pi / 180))) * self.z
+
         self.back = glGenTextures(1)
         glBindTexture(GL_TEXTURE_2D, self.back)
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
